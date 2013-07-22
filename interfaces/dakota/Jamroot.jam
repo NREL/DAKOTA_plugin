@@ -1,0 +1,127 @@
+# Copyright David Abrahams 2006. Distributed under the Boost
+# Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+#using python : 2.6 : "C:/Python26/" ;
+
+import python ;
+
+#using msvc ;
+
+if ! [ python.configured ]
+{
+    ECHO "notice: no Python configured in user-config.jam" ;
+    ECHO "notice: will use default configuration" ;
+    using python ;
+}
+
+# Specify the path to the Boost project.  If you move this project,
+# adjust this path to refer to the Boost root directory.
+use-project /boost/
+  : "C:/Documents and Settings/pgraf/Desktop/boost_1_52_0"
+  ; 
+
+# Set up the project-wide requirements that everything uses the
+# boost_python library from the project whose global ID is
+# /boost/python.
+project
+#  : requirements <library>/boost/system//boost_system 
+#  : requirements <library>/boost/regex//boost_regex 
+   : requirements <library>/boost/python//boost_python 
+ ;
+
+# Declare the three extension modules.  You can specify multiple
+# source files after the colon separated by spaces.
+python-extension _dakota 
+  : python_interface.cpp
+   dakface.cpp
+   dakota_python_binding.cpp
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota_5_2.cygwin.RC2\\Dakota\\lib\\libdakota_src.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota_5_2.cygwin.RC2\\Dakota\\lib\\libteuchos.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota_5_2.cygwin.RC2\\Dakota\\lib\\libpecos.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota_5_2.cygwin.RC2\\Dakota\\lib\\libnidr.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota_5_2.cygwin.RC2\\Dakota\\lib\\liblhs.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota_5_2.cygwin.RC2\\Dakota\\lib\\libsparsegrid.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota_5_2.cygwin.RC2\\Dakota\\lib\\libconmin.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota_5_2.cygwin.RC2\\Dakota\\lib\\liboptpp.a"
+##
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota.mingw\\lib\\libdakota.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota.mingw\\lib\\libteuchos.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota.mingw\\lib\\libpecos.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota.mingw\\lib\\libnidr.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota.mingw\\lib\\liblhs.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota.mingw\\lib\\libsparsegrid.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota.mingw\\lib\\libconmin.a"
+#   "C:\\Documents and Settings\\pgraf\\Desktop\\Dakota.mingw\\lib\\libopt.a"
+##
+#   "C:\\cygwin\\usr\\dakota\\lib\\libdakota.a"
+#   "C:\\cygwin\\usr\\dakota\\lib\\libteuchos.a"
+#   "C:\\cygwin\\usr\\dakota\\lib\\libpecos.a"
+#   "C:\\cygwin\\usr\\dakota\\lib\\libnidr.a"
+#   "C:\\cygwin\\usr\\dakota\\lib\\liblhs.a"
+#   "C:\\cygwin\\usr\\dakota\\lib\\libsparsegrid.a"
+#   "C:\\cygwin\\usr\\dakota\\lib\\libconmin.a"
+#   "C:\\cygwin\\usr\\dakota\\lib\\liboptpp.a"
+##
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libdakota.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libteuchos.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libpecos.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libnidr.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\liblhs.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libsparsegrid.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libconmin.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\liboptpp.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libboost_filesystem.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libboost_system.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libboost_regex.a"
+   "C:\\MinGw\\msys\\1.0\\dakota\\lib\\libboost_signals.a"
+##
+   "C:\\cygwin\\lib\\libblas.a"
+   "C:\\cygwin\\lib\\liblapack.a"
+   c:/mingw/lib/gcc/mingw32/4.6.2/libgfortran.a
+   c:/mingw/lib/gcc/mingw32/4.6.2/libgcc_s.a	
+  : <define>WINDOWS 
+    <define>DAKOTA_PYTHON_NUMPY
+    <define>_SCL_SECURE_NO_WARNINGS
+   <include>"C:/Documents and Settings/pgraf/Desktop/boost_1_52_0/" 
+   <include>"C:/Documents and Settings/pgraf/Desktop/Dakota_5_2.cygwin.RC2/Dakota/include"
+   <include>"C:/Python26/Lib/site-packages/numpy/core/include"
+;
+
+#python-extension _testbinding
+#  : test_python_binding.cpp
+#python-extension _testbinding
+#  : test_python_binding.cpp
+#  : <define>WINDOWS 
+#    <define>DAKOTA_PYTHON_NUMPY
+#    <define>_SCL_SECURE_NO_WARNINGS
+#   <include>"C:/Documents and Settings/pgraf/Desktop/boost_1_52_0/" 
+#   <include>"C:/Documents and Settings/pgraf/Desktop/Dakota_5_2.cygwin.RC2/Dakota/include"
+#   <include>"C:/Python26/Lib/site-packages/numpy/core/include"
+#;
+
+# Put the extension and Boost.Python DLL in the current directory, so
+# that running script by hand works.
+
+install convenient_copy 
+  : _dakota 
+  : <install-dependencies>on <install-type>SHARED_LIB <install-type>PYTHON_EXTENSION 
+    <location>. 
+  ;
+
+#install convenient_copy 
+#  : _testbinding 
+#  : <install-dependencies>on <install-type>SHARED_LIB <install-type>PYTHON_EXTENSION 
+#    <location>. 
+#  ;
+
+# A little "rule" (function) to clean up the syntax of declaring tests
+# of these extension modules.
+local rule run-test ( test-name : sources + )
+{
+    import testing ;
+    testing.make-test run-pyd : $(sources) : : $(test-name) ;
+}
+
+# Declare test targets
+#run-test hello : hello_ext hello.py ;

@@ -1,0 +1,4 @@
+
+#boost-build "C:/Documents and Settings/pgraf/Desktop/boost_1_47/" ; 
+
+boost-build "C:/Documents and Settings/pgraf/Desktop/boost_1_52_0/tools/build/v2" ; 

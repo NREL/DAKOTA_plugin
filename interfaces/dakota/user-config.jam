@@ -1,0 +1,7 @@
+#  MSVC configuration
+#using msvc : 10.0 ;
+
+using gcc ;
+
+#  Python configuration
+using python : 2.6 : "C:/Python26" : "C:/Python26/include" : "C:/Python26/libs" ;

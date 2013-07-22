@@ -1,0 +1,21 @@
+responses
+	num_objective_functions = 1
+	no_gradients
+	no_hessians
+variables
+	continuous_design = 2
+	lower_bounds    4     1.3
+	upper_bounds     15      3.5
+	descriptors      'windSpeed50m'     'weibullK'
+strategy
+	single_method
+	tabular_graphics_data
+interface
+	direct
+	analysis_drivers = 'NRELpython'
+	analysis_components = 'twstr.interfaces.dakota.dakota_driver:dakota_callback'
+model
+	single
+method
+	multidim_parameter_study
+	partitions = 10 10

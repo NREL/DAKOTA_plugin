@@ -15,7 +15,6 @@
 // ++==++==++==++==++==++==++==++==++==++==
 
 /* dakota_python_interface.cpp
-   copyright NREL, 2012
 
 This file will implement a simple boost based python binding for the dakota library
    Goal is to be able to simply say

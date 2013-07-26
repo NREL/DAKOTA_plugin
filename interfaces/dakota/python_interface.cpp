@@ -14,7 +14,6 @@
 // 
 // ++==++==++==++==++==++==++==++==++==++==
 /* python_interface.cpp
-   copyright NREL, 2012
 
    This file implements an application interface for DAKOTA that is very much like the python-enabled
    direct application interface (DirectApplicInterface).  The difference here is that we allow two more fields

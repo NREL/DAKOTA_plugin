@@ -54,15 +54,6 @@ dynamic libraries expected to come from the system.  For a 'vanilla' Ubuntu
 test installation the following libraries were not included (specific versions
 may vary with egg build):
 
-    Boost
-        libboost_filesystem.so.1.49.0
-        libboost_mpi.so.1.49.0
-        libboost_python.so.1.49.0
-        libboost_regex.so.1.49.0
-        libboost_serialization.so.1.49.0
-        libboost_signals.so.1.49.0
-        libboost_system.so.1.49.0
-
     OpenMPI
         libmpi.so.0
         libmpi_cxx.so.0
@@ -77,6 +68,10 @@ may vary with egg build):
     X:
         libXm.so.4
         libXp.so.6
+
+    Other:
+        liblapack.so.3gf
+        libblas.so.3gf
 
 Also like the normal DAKOTA installation, the Windows egg includes everything
 necessary for a 'vanilla' Windows installation.

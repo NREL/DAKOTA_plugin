@@ -28,8 +28,8 @@ to load is likely running as x86_64.
 
 The linux platform is built using mpicxx.  Some linker magic is used to avoid
 having to set LD_LIBRARY_PATH on the system the egg is installed on.
-Libraries not part of DAKOTA (boost, openmpi) are not included.
-This has only been tested on the build machine.
+Libraries not part of DAKOTA (openmpi, unicode, X, lapack/blas) are not
+included.  This has been tested on a 'vanilla' Ubuntu VM.
 
 The win32 platform is built using VisualStudio C++ and Intel Fortran.
 This has been tested on a 'vanilla' (no DAKOTA pre-installed) Windows machine.
@@ -185,7 +185,9 @@ else:
     EXTRA_LIBS = ['gfortran',
                   'SM', 'ICE', 'Xext', 'Xm', 'Xt', 'X11', 'Xpm', 'Xmu']
     EGG_LIBS = glob.glob(os.path.join(dakota_lib, '*.so'))
-    EGG_LIBS.extend(glob.glob(os.path.join(dakota_bin, '*.so')))
+    EGG_LIBS.extend(glob.glob(os.path.join(dakota_bin, '*.so*')))
+    EGG_LIBS.extend([os.path.join(BOOST_LIBDIR, 'libboost_python.so.1.49.0'),
+                     os.path.join(BOOST_LIBDIR, 'libboost_mpi.so.1.49.0')])
 
 
 sources = ['dakface.cpp', 'dakota_python_binding.cpp']

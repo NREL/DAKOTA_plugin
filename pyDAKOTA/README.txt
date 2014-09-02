@@ -18,13 +18,14 @@ https://github.com/OpenMDAO-Plugins/dakota-driver.
 
 This code provides:
 
-1. An interface to DAKOTA, in "library mode", that allows passing an MPI
-communicator and a "void *" object to DAKOTA. This is still in C++.
+1. An interface to DAKOTA, in "library mode", that supports passing to DAKOTA
+argc/argv for the command-line, an optional MPI communicator, and a pointer
+to a Python exception object. This is still in C++.
 
-2. A python wrapper for this interface, so, in python, you can say
-"import dakota", then "dakota.run_dakota(infile, object, comm)".
-"comm" will be used as the MPI communicator for DAKOTA, and "object" will be
-passed _back_ to the python routine specified in your dakota input file.
+2. A Python wrapper for this interface, so, in Python, you can say
+"import dakota", then "dakota.DakotaBase().run_dakota(mpi_comm=comm)".
+"comm" will be used as the MPI communicator for DAKOTA, and
+DakotaBase.dakota_callback() will be called by DAKOTA for function evaluations.
 
 The deliverable is a Python 'egg'. If your environment is properly configured,
 you can use this to build the egg:
@@ -33,7 +34,7 @@ you can use this to build the egg:
 
 To install the egg (easy_install is from setuptools):
 
-    easy_install pyDAKOTA-5.3_1-py2.7-linux-x86_64.egg
+    easy_install pyDAKOTA-6.0_1-py2.7-linux-x86_64.egg
 
 To run a trivial test:
 
@@ -41,6 +42,15 @@ To run a trivial test:
 
 This has been tested on Linux and Windows. Cygwin has also been sucessfully
 built in the past.
+
+
+Requirements
+------------
+
+To build you'll need DAKOTA 6.0+ (svn trunk >= 2707).
+
+To install, just use easy_install or pip to install the egg. All non-system
+libraries are provided. DAKOTA graphics is disabled for both LInux and Windows.
 
 
 License
@@ -51,26 +61,10 @@ See "Apache2.0License.txt" in this directory.
 
 C++ source code:
 ----------------
-dakface.cpp:  This is the library entry point.  Following the instructions at
-http://dakota.sandia.gov/docs/dakota/5.2/html-dev/DakLibrary.html,
-it detects if the user has chosen the "NRELpython" interface, and installs one
-if so.
+dakface.cpp:  This is the library entry point.  It runs DAKOTA in 'sandwich'
+mode where the caller provides input and DAKOTA calls-back to perform function
+evaluations.
 
 dakota_python_binding.cpp:  This is the boost wrapper that exposes the
 functions in dakface.cpp to python.
-
-python_interface.cpp:  This is where the subclass of DAKOTA's
-DirectApplicInterface is implemented. This is basically identical to
-PythonInterface, except:
-
-1. It passes a user data pointer to the invoked Python function.
-2. It can let Python exceptions propagate back to a Python caller of
-   DAKOTA if other parts of DAKOTA have been updated to support this.
-3. The constructor handles Python interpreter initialization better, in that if
-   the intepreter is already running, we don't try to initialize it again.
-   The interpreter would already be running if DAKOTA was invoked by a
-   Python function (such as this wrapper).
-
-This last point is why we can't simply inherit from PythonInterface.
-Sadly, we have to duplicate it.
 

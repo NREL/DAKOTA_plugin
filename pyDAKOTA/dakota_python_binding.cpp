@@ -97,46 +97,6 @@ int run_dakota_mpi(char *infile, int &_mpi,
   return all_but_actual_main_mpi(argc, argv, comm, tmp_exc);
 }
 
-#ifdef DAKOTA_HAVE_MPI
-int run_dakota_mpi_data(char *infile, boost::mpi::communicator &_mpi, bp::object data,
-#else
-int run_dakota_mpi_data(char *infile, int &_mpi, bp::object data,
-#endif
-                        char *outfile, char *errfile, bp::object exc)
-{
-  MAKE_ARGV
-
-  MPI_Comm comm = MPI_COMM_WORLD;
-  if (_mpi) 
-    comm = _mpi;
-
-  void *tmp = NULL;
-  if (data)
-    tmp = &data;
-
-  void *tmp_exc = NULL;
-  if (exc)
-    tmp_exc = &exc;
-
-  return all_but_actual_main_mpi_data(argc, argv, comm, tmp, tmp_exc);
-}
-
-int run_dakota_data(char *infile, bp::object data,
-                    char *outfile, char *errfile, bp::object exc)
-{
-  MAKE_ARGV
-
-  void *tmp = NULL;
-  if (data)
-    tmp = &data;
-
-  void *tmp_exc = NULL;
-  if (exc)
-    tmp_exc = &exc;
-
-  return all_but_actual_main_data(argc, argv, tmp, tmp_exc);
-}
-
 // When DAKOTA fails it throws an int (if the process isn't aborted).
 // Normally Python model errors will have already recorded an exception.
 // If not, we record one here.
@@ -160,7 +120,5 @@ BOOST_PYTHON_MODULE(pyDAKOTA)
 
   def("run_dakota", run_dakota, "run dakota");
   def("run_dakota_mpi", run_dakota_mpi, "run dakota mpi");
-  def("run_dakota_mpi_data", run_dakota_mpi_data, "run dakota mpi data");
-  def("run_dakota_data", run_dakota_data, "run dakota data");
 }
 

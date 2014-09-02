@@ -47,34 +47,10 @@ built in the past.
 Requirements
 ------------
 
-DAKOTA 6.0+ (svn trunk >= 2707).
+To build you'll need DAKOTA 6.0+ (svn trunk >= 2707).
 
-Like the normal DAKOTA installation, the Linux egg does not provide various
-dynamic libraries expected to come from the system.  For a 'vanilla' Ubuntu
-test installation the following libraries were not included (specific versions
-may vary with egg build):
-
-    OpenMPI
-        libmpi.so.0
-        libmpi_cxx.so.0
-        libopen_pal.so.0
-        libopen_rte.so.0
-
-    Unicode:
-        libicudata.so.48
-        libicui8n.so.48
-        libicuuc.so.48
-
-    X:
-        libXm.so.4
-        libXp.so.6
-
-    Other:
-        liblapack.so.3gf
-        libblas.so.3gf
-
-Also like the normal DAKOTA installation, the Windows egg includes everything
-necessary for a 'vanilla' Windows installation.
+To install, just use easy_install or pip to install the egg. All non-system
+libraries are provided. DAKOTA graphics is disabled for both LInux and Windows.
 
 
 License

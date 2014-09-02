@@ -28,8 +28,9 @@ to load is likely running as x86_64.
 
 The linux platform is built using mpicxx.  Some linker magic is used to avoid
 having to set LD_LIBRARY_PATH on the system the egg is installed on.
-Libraries not part of DAKOTA (openmpi, unicode, X, lapack/blas) are not
-included.  This has been tested on a 'vanilla' Ubuntu VM.
+DAKOTA graphics has been disabled to reduce the number of library dependencies.
+This is built on RHEL 6.4 to mimic the DAKOTA release, and has been tested on
+RHEL 6.4 and Ubuntu 'pangolin'.
 
 The win32 platform is built using VisualStudio C++ and Intel Fortran.
 This has been tested on a 'vanilla' (no DAKOTA pre-installed) Windows machine.
@@ -178,12 +179,12 @@ elif sys.platform == 'darwin':
 else:
     # This LD_FLAGS stuff avoids having to set LD_LIBRARY_PATH to access
     # the other (not pyDAKOTA.so) shared libraries that are part of the egg.
-    BOOST_INCDIR = '/home/setowns1/include'
-    BOOST_LIBDIR = '/home/setowns1/boost_1_49_0/stage/lib'
+    BOOST_INCDIR = '/home/ec2-user/include'
+    BOOST_LIBDIR = '/home/ec2-user/boost_1_49_0/stage/lib'
     LD_FLAGS = ['-Wl,-z origin',
                 '-Wl,-rpath=${ORIGIN}:${ORIGIN}/../'+egg_dir]
     EXTRA_LIBS = ['gfortran',
-                  'SM', 'ICE', 'Xext', 'Xm', 'Xt', 'X11', 'Xpm', 'Xmu']
+                 ] # 'SM', 'ICE', 'Xext', 'Xm', 'Xt', 'X11', 'Xpm', 'Xmu']
     EGG_LIBS = glob.glob(os.path.join(dakota_lib, '*.so'))
     EGG_LIBS.extend(glob.glob(os.path.join(dakota_bin, '*.so*')))
     EGG_LIBS.extend([os.path.join(BOOST_LIBDIR, 'libboost_python.so.1.49.0'),

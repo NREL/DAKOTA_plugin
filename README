@@ -1,3 +1,11 @@
+The software in this repository is deprecated.  It has been replaced by two separate software repositories:
+https://github.com/wisdem/pyDAKOTA (pure python wrapper for DAKOTA)
+https://github.com/wisdem/dakota_driver (openmdao DAKOTA driver plugin)
+
+Please fork those repositories for use with OpenMDAO versions 1.0 and higher and DAKOTA versions 6.0 and higher.
+
+*********************************************************************
+
 
 Materials for openMDAO DAKOTA Driver object
 -------------------------------------------
